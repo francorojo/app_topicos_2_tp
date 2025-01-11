@@ -1,0 +1,9 @@
+
+POST http://localhost:5000/log
+Content-Type: application/json
+
+{
+    "service": "auth - app",
+    "message": "logged",
+    "tag_type": "tag_example"
+}
