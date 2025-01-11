@@ -1,0 +1,6 @@
+log_service/.venv
+log_service/log.txt
+
+**/__pycache__
+
+
