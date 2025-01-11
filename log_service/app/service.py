@@ -1,4 +1,7 @@
 from datetime import datetime
+from multiprocessing import Lock
+
+lock = Lock()
 
 def format_message(json: dict) -> str:
     service = json.pop('service', '')
@@ -25,12 +28,10 @@ def log_message(json: dict) -> None:
     Logs a given message to a file named 'log.txt'.
     Args:
         message (str): The message to be logged.
-    
-    Log Format:
-    [timestamp] [message]
+
     """
 
     formatted_message = format_message(json)
-
-    with open('log.txt', 'a',encoding='UTF-8') as file:
-        file.write(f"{formatted_message}\n")
+    with lock:
+        with open('log.txt', 'a',encoding='UTF-8') as file:
+            file.write(f"{formatted_message}\n")
