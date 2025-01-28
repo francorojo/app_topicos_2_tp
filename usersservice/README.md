@@ -1,10 +1,7 @@
-# app_topicos_2_tp
-App using microservices and integration with ai model.
+# Api Core Service
+Aplicación encargada de realizar la integracion de los diferentes servicios.
 
-Steps
-cd apicore
-python3 -m venv .venv
-. .venv/bin/activate
-pip install Flask
-pip install Flask-SQLAlchemy
-flask --app hello run
+## Init
+Utilizar el script setup.sh
+
+Ejecutar el comando `flask --app api run --port number`

@@ -1,7 +1,7 @@
 import uuid
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-
+from simple_rest_client.api import API
 
 app = Flask(__name__)
 
@@ -23,11 +23,29 @@ class User(db.Model):
    def as_dict(self):
        return {col.name: getattr(self, col.name) for col in self.__table__.columns}
 
-
 # push context manually to app
 with app.app_context():
    db.create_all()
 # END database Section
+
+# create users api instance
+log_api = API(
+   api_root_url='http://localhost:8000/',  # base api url
+   params={},  # default params
+   headers={},  # default headers
+   timeout=2,  # default timeout in seconds
+   append_slash=False,  # append slash to final url
+   json_encode_body=True,  # encode body as json
+)
+log_api.add_resource(resource_name='log')
+
+# START Log Section
+def log_message(message, tag_type):
+   body = {'service': "users api - service",
+           'message': message,
+           'tag_type': tag_type}
+   log_api.log.create(body=body, params={}, headers={})
+# END Log Section
 
 
 @app.route('/users', methods=['POST'])
@@ -36,6 +54,7 @@ def add_user():
    new_user = User(type=data['type'], username=data['username'])
    db.session.add(new_user)
    db.session.commit()
+   log_message('New username: ' + data['username'] + " - type: " + data['type'], "INFO")
    return jsonify({'message': 'User added', 'user': new_user.as_dict()}), 201
 
 
