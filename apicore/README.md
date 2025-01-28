@@ -1,17 +1,10 @@
-# app_topicos_2_tp
-App using microservices and integration with ai model.
+# Api Core Service
+Aplicación encargada de realizar la integracion de los diferentes servicios.
 
-Steps
-cd myproject
-python3 -m venv .venv
-. .venv/bin/activate
-pip install Flask
-pip install Flask-Limiter
-pip install simple-rest-client
-pip install pymemcache
+## Init
+Utilizar el script setup.sh
+En caso de no funcionar el comando: brew install memcached
+Es necesario utilizar: arch -arm64 brew install memcached
+Luego de finalizar el uso se debe correr el comando: brew services stop memcached
 
-arch -arm64 brew install memcached
-brew install memcached
-brew services start memcached
-
-flask --app hello run
+Ejecutar el comando `flask --app hello run --port number`
