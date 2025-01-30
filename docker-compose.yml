@@ -1,0 +1,14 @@
+services:
+    logger:
+        image: topicos_2:logger
+        container_name: logger
+    ai-model:
+        image: topicos_2:ai_model
+        container_name: ai-model
+        environment:
+            - LOGGER_SERVICE_BASE_URL=http://logger:8000
+        ports:
+            - "5000:8000"
+        depends_on:
+            - logger
+
