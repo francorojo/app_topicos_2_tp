@@ -16,6 +16,13 @@ Para ejecutar en un ambiente productivo usamos gunicorn con 4 workers. En caso q
 
 Ejemplo el comando `gunicorn -w 4 app:app`
 
+### Configurar modelo
+
+Para configurar los modelos a cargar se deben mapear a traves de docker los siguientes volumenes:
+
+-   ./data/real_state_data_train.tsv.gz el cual debe contener las tripletas para contexto del modelo.
+-   ./data/trained_model el cual deberá ser el modelo en sí.
+
 ## Test
 
 Para testear el modelo se dejan un archivo con tests funcionales y otro con tests de stress.
