@@ -1,12 +1,18 @@
 import requests
 from datetime import datetime
 from app.prediction_input import PredictionInput
+from app.model import RealStatePredictor
+from app.utils import log
+import json
+
+
+model = RealStatePredictor()
 
 def format_prediction_input(json: dict) -> PredictionInput:
     return PredictionInput()
 
 def make_prediction() -> float:
-    return 0.5
+    return model.predict_best_similars(334785)
 
 def log_prediction(prediction: float) -> None:
     """
@@ -15,19 +21,7 @@ def log_prediction(prediction: float) -> None:
         prediction (float): The prediction to be logged.
     """
 
-    service_url = 'http://localhost:5000/log'
-    body = {
-        'service': 'prediction_service',
-        'message': f'Prediction: {prediction}',
-        'tag_timestamp': datetime.utcnow().isoformat(),
-        'tag_type': 'prediction'
-    }
-
-    response = requests.post(service_url, json=body)
-    if(response.status_code!= 200):
-        print(f"Failed to log prediction: {response.text}")
-    else:
-        print("Logged prediction successfully")
+    log(f'Prediction: {prediction}')
  
 def predict(input: PredictionInput) -> float:
     """
@@ -35,7 +29,11 @@ def predict(input: PredictionInput) -> float:
 
     """
 
-    prediction = make_prediction()
-    log_prediction(prediction)
+    similar_real_states = make_prediction()
+
+    try:
+        log_prediction(0.0)
+    except Exception as e:
+        print(f"Failed to log prediction: {str(e)}")
     
-    return prediction
+    return similar_real_states
