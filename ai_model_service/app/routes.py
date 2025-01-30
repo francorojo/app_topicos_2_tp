@@ -1,7 +1,16 @@
-from app.service import format_prediction_input, predict
+from app.service import predict
 
 from app import app
 from flask import request, jsonify, Response
+from app.prediction_input import PredictionInput
+
+def format_prediction_input(json: dict) -> PredictionInput:
+    property_index = json.get("real_state_index")
+
+    if property_index is None:
+        raise ValueError("Property index is required")
+        
+    return PredictionInput(property_index)
 
 @app.route('/predict', methods=['POST'])
 def model_predict():

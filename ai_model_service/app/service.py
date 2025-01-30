@@ -8,11 +8,10 @@ import json
 
 model = RealStatePredictor()
 
-def format_prediction_input(json: dict) -> PredictionInput:
-    return PredictionInput()
 
-def make_prediction() -> float:
-    return model.predict_best_similars(334785)
+
+def predict_similars(property_index: int) -> float:
+    return model.predict_best_similars(property_index)
 
 def log_prediction(prediction: float) -> None:
     """
@@ -23,13 +22,13 @@ def log_prediction(prediction: float) -> None:
 
     log(f'Prediction: {prediction}')
  
-def predict(input: PredictionInput) -> float:
+def predict(predictionInput: PredictionInput) -> float:
     """
     Given a prediction input, return a prediction of similarity.
 
     """
 
-    similar_real_states = make_prediction()
+    similar_real_states = predict_similars(predictionInput.property_index)
 
     try:
         log_prediction(0.0)
