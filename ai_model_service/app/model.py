@@ -42,7 +42,6 @@ class RealStatePredictor:
 
         # Get similarity scores from the model
         scores = self.model.score_t(model_input).cpu().detach().numpy()[0]
-        print("scores", scores)
 
         # Get top N most similar indices (excluding the first which is itself)
         similar_indices = np.argsort(scores)[1:n+1]
@@ -50,6 +49,5 @@ class RealStatePredictor:
         # Construct a list of dictionaries
         similars = [{"index": int(idx), "similarity": float(scores[idx])} for idx in similar_indices]
 
-        print("similar", similars)
         return similars
 

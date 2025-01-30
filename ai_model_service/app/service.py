@@ -13,14 +13,9 @@ model = RealStatePredictor()
 def predict_similars(property_index: int) -> float:
     return model.predict_best_similars(property_index)
 
-def log_prediction(prediction: float) -> None:
-    """
-    Logs a given prediction to log_service
-    Args:
-        prediction (float): The prediction to be logged.
-    """
 
-    log(f'Prediction: {prediction}')
+def log_prediction(property_index:int, similar_predictions: list) -> None:
+    log(f'{similar_predictions}', [('property_index', str(property_index) )])
  
 def predict(predictionInput: PredictionInput) -> float:
     """
@@ -31,7 +26,7 @@ def predict(predictionInput: PredictionInput) -> float:
     similar_real_states = predict_similars(predictionInput.property_index)
 
     try:
-        log_prediction(0.0)
+        log_prediction(similar_real_states)
     except Exception as e:
         print(f"Failed to log prediction: {str(e)}")
     

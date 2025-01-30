@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t topicos_2:logger
+docker build -t topicos_2:logger .
