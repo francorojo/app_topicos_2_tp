@@ -2,7 +2,7 @@
 
 
 make_request(){
-    curl http://localhost:5000/predict -H 'Content-Type: application/json' -s
+    curl http://localhost:5000/predict -H 'Content-Type: application/json' -s -d '{"real_state_index": 412734 }'
 }
 
 if [[ -n $1 ]];
