@@ -8,8 +8,6 @@ import json
 
 model = RealStatePredictor()
 
-
-
 def predict_similars(property_index: int) -> float:
     return model.predict_best_similars(property_index)
 
@@ -26,7 +24,7 @@ def predict(predictionInput: PredictionInput) -> float:
     similar_real_states = predict_similars(predictionInput.property_index)
 
     try:
-        log_prediction(similar_real_states)
+        log_prediction(predictionInput.property_index, similar_real_states)
     except Exception as e:
         print(f"Failed to log prediction: {str(e)}")
     
