@@ -9,8 +9,19 @@ services:
         container_name: ai-model
         environment:
             - LOGGER_SERVICE_BASE_URL=http://logger:8000
+            - SERVICE_NAME=prediction_service
         ports:
             - "5000:8000"
+        depends_on:
+            - logger
+    users:
+        image: topicos_2:users_service
+        container_name: users
+        environment:
+            - LOGGER_SERVICE_BASE_URL=http://logger:8000
+            - SERVICE_NAME=users_service
+        ports:
+            - "5002:8000"
         depends_on:
             - logger
 
