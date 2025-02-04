@@ -1,5 +1,5 @@
 # Utilice la imagen oficial de Python 3.8 slim como imagen base
-FROM python:3.8-slim 
+FROM python:3.9-slim 
 
 # Establezca el directorio de trabajo dentro del contenedor
 WORKDIR /api-flask 
