@@ -14,17 +14,28 @@ def format_prediction_input(json: dict) -> PredictionInput:
 
 @app.route('/predict', methods=['POST'])
 def model_predict():
-    try:
-        formatted_input = format_prediction_input(request.json)
-        prediction:float = predict(formatted_input)
-        return jsonify(prediction), 200
-    except Exception as e:
-        return Response(f"An error occurred: {str(e)}\n", status=500)
+    formatted_input = format_prediction_input(request.json)
+    validate_input(formatted_input)
+    prediction:float = predict(formatted_input)
+    return jsonify(prediction), 200
+
+def validate_input(input: PredictionInput) -> None:
+    if not isinstance(input.property_index, int):
+        raise ValueError("Property index must be an integer")
+    if input.property_index < 0:
+        raise ValueError("Property index must be positive")
+    if input.property_index not in get_properties_from_model():
+        raise ValueError("Property index does not exist in the dataset")
 
 @app.route("/properties", methods=['GET'])
 def get_properties():
-    try:
-        properties = get_properties_from_model()
-        return jsonify(properties), 200
-    except Exception as e:
-        return Response(f"An error occurred: {str(e)}\n", status=500)
+    properties = get_properties_from_model()
+    return jsonify(properties), 200
+
+@app.errorhandler(ValueError)
+def handle_value_error(error):
+    return Response(f"Invalid input: {str(error)}\n", status=400)
+
+@app.errorhandler(Exception)
+def handle_exception(error):
+    return Response(f"An error occurred: {str(error)}\n", status=500)

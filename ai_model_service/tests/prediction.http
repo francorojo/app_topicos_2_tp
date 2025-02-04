@@ -8,6 +8,6 @@ POST http://localhost:5000/predict
 Content-Type: application/json
 
 {
-    "real_state_index": 2949452
+    "real_state_index": 294945
 }
 
