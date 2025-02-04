@@ -2,6 +2,8 @@ services:
     logger:
         image: topicos_2:logger
         container_name: logger
+        ports:
+            - "5001:8000"
     ai-model:
         image: topicos_2:ai_model
         container_name: ai-model
