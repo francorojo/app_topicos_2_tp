@@ -29,3 +29,12 @@ def predict(predictionInput: PredictionInput) -> float:
         print(f"Failed to log prediction: {str(e)}")
     
     return similar_real_states
+
+def get_properties_from_model() -> list[int]:
+    """
+    Retrieve all property indices from the model.
+
+    Returns:
+        list[int]: A list of property indices.
+    """
+    return model.get_properties()
