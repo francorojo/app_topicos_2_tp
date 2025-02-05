@@ -1,16 +1,16 @@
 from datetime import datetime
 import requests
 from os import environ
-from users_service.app.exception import LoggingError
+from api_core_service.app.exception import LoggingError, UsersError
 
 
 BASE_LOG_URL = environ.get('LOGGER_SERVICE_BASE_URL', 'http://localhost:5000')
+BASE_USERS_URL = environ.get('USERS_SERVICE_BASE_URL', 'http://localhost:5001')
+
 SERVICE_NAME = environ.get('SERVICE_NAME')
 
 if not SERVICE_NAME:
     raise ValueError("SERVICE_NAME environment variable must be set")
-
-print(f"Using LOGGER_SERVICE_BASE_URL: {BASE_LOG_URL}")
 
 
 def log(message: str, tags: list[tuple[str,str]] = None) -> None:
@@ -30,3 +30,9 @@ def log(message: str, tags: list[tuple[str,str]] = None) -> None:
     response = requests.post(f"{BASE_LOG_URL}/log", json=body, timeout=5)
     if(response.status_code!= 200):
         raise LoggingError(f"Failed to log: {response.text}")
+
+
+def user_by_api_key(authorization: str) -> None:
+    response = requests.get(f"{BASE_USERS_URL}/users?api_key={authorization}", json={}, timeout=5)
+    if(response.status_code!= 200):
+        raise UsersError(f"Failed to get users: {response.text}")

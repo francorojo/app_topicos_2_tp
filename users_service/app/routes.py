@@ -11,7 +11,6 @@ def add_user():
    data = request.get_json()
    new_user = User(type=data['type'], username=data['username'])
    new_user = users_service.add_user(new_user)
-   print("added")
    return jsonify({'message': 'User added', 'user': new_user.as_dict()}), 201
 
 

@@ -11,7 +11,6 @@ class UsersRepository:
     def add_user(self, user: User):
         db.session.add(user)
         db.session.commit()
-        print("dadad")
         log('New username: ' + user.username + " - type: " + user.type)
 
     def get_user_by_api_key(self, api_key: str):
@@ -22,4 +21,3 @@ class UsersRepository:
     
     def get_user_by_id(self, user_id: str):
         return User.query.filter_by(id=user_id).first()
-    
