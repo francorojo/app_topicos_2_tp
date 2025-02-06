@@ -1,4 +1,4 @@
-from api_core_service.app.exception import LoggingError, PredictionError, UsersError
+from app.exception import LoggingError, PredictionError, UsersError
 from app.utils import log
 from flask import request, jsonify
 from app.__init__ import get_user_type_rate_limit
