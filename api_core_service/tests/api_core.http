@@ -1,0 +1,11 @@
+
+
+POST http://localhost:5000/service
+Content-Type: application/json
+Authorization: <Api Key>
+
+{
+    "real_state_index": 123456
+}
+
+

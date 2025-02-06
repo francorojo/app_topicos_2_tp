@@ -1,11 +1,13 @@
 from datetime import datetime
 import requests
 from os import environ
-from api_core_service.app.exception import LoggingError, UsersError
+from api_core_service.app.exception import LoggingError, PredictionError, UsersError
 
 
 BASE_LOG_URL = environ.get('LOGGER_SERVICE_BASE_URL', 'http://localhost:5000')
 BASE_USERS_URL = environ.get('USERS_SERVICE_BASE_URL', 'http://localhost:5001')
+BASE_AI_MODEL_URL = environ.get('AI_MODEL_SERVICE_BASE_URL', 'http://localhost:5002')
+
 
 SERVICE_NAME = environ.get('SERVICE_NAME')
 
@@ -36,3 +38,9 @@ def user_by_api_key(authorization: str) -> None:
     response = requests.get(f"{BASE_USERS_URL}/users?api_key={authorization}", json={}, timeout=5)
     if(response.status_code!= 200):
         raise UsersError(f"Failed to get users: {response.text}")
+
+
+def prediction(real_state_index: int) -> None:
+    response = requests.get(f"{BASE_AI_MODEL_URL}/prediction", json={}, timeout=5)
+    if(response.status_code!= 200):
+        raise PredictionError(f"Failed to get prediction: {response.text}")

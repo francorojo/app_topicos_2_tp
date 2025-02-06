@@ -6,3 +6,7 @@ class LoggingError(Exception):
 
 class UsersError(Exception):
     pass
+
+
+class PredictionError(Exception):
+    pass

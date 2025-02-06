@@ -1,4 +1,4 @@
-from api_core_service.app.exception import LoggingError, UsersError
+from api_core_service.app.exception import LoggingError, PredictionError, UsersError
 from app.utils import log
 from flask import request, jsonify
 from app.__init__ import get_user_type_rate_limit
@@ -16,10 +16,10 @@ def service():
        log('Key user: ' + authorization + " - Invalid or missing JSON data", "ERROR")
        raise ValueError("Invalid or missing JSON data")
    else:
-       apartments_list = data.get('inputs')
+       real_state_index = data.get('real_state_index')
 
-   log('New request key user: ' + authorization + " - Result: " + apartments_list, "INFO")
-   return jsonify({'apartments_list': apartments_list, 'Authorization': authorization}), 200
+   log('New request key user: ' + authorization + " - Result: " + real_state_index, "INFO")
+   return jsonify([{"index":real_state_index, "similarity": 1}]), 200
 
 @app.errorhandler(Exception)
 def handle_error(error):
@@ -31,6 +31,10 @@ def handle_users_error(error):
 
 @app.errorhandler(LoggingError)
 def handle_logging_error(error):
+    return jsonify({'error': str(error)}), 500
+
+@app.errorhandler(PredictionError)
+def handle_prediction_error(error):
     return jsonify({'error': str(error)}), 500
 
 @app.errorhandler(ValueError)
