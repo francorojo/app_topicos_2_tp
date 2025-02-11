@@ -13,12 +13,12 @@ class UsersService:
     def get_all(self, api_key: str, user_type: str):
         return self.users_repository.get_all()
     
-    def get_users_by_api_key(self, api_key: str) -> list[User]:
+    def get_user_by_api_key(self, api_key: str) -> User:
         if not api_key:
            raise ValueError("API key is required")
         return self.users_repository.get_user_by_api_key(api_key)
       
-    def get_users_by_type(self, user_type: str):
+    def get_users_by_type(self, user_type: str) -> list[User]:
         if not user_type:
             raise ValueError("User type is required")
         return self.users_repository.get_users_by_type(user_type)

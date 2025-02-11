@@ -22,7 +22,7 @@ def get_users():
     if user_type:
        users = users_service.get_users_by_type(user_type)
     elif api_key:
-        users = users_service.get_users_by_api_key(api_key)
+        users = [users_service.get_user_by_api_key(api_key)]
     else:
         users = users_service.get_all(api_key, user_type)
     return jsonify([user.as_dict() for user in users])
