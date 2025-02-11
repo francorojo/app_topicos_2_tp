@@ -2,10 +2,8 @@
 FROM python:3.8-slim 
 
 # Establezca el directorio de trabajo dentro del contenedor
-WORKDIR /api-flask 
+WORKDIR /app
 
-# Copie los archivos y directorios necesarios en el contenedor
-COPY /app . 
 COPY requirements.txt . 
 
 # Actualizar pip e instalar las dependencias de Python
@@ -13,6 +11,9 @@ RUN pip3 install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 # Install Memcached
 RUN apt-get update && apt-get install -y memcached && rm -rf /var/lib/apt/lists/*
+
+# Copie los archivos y directorios necesarios en el contenedor
+COPY app . 
 
 # Exponer el puerto 5000 para la aplicación Flask
 EXPOSE 5000

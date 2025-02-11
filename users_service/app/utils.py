@@ -1,7 +1,7 @@
 from datetime import datetime
 import requests
 from os import environ
-from users_service.app.exception import LoggingError
+from app.exception import LoggingError
 
 
 BASE_LOG_URL = environ.get('LOGGER_SERVICE_BASE_URL', 'http://localhost:5000')
