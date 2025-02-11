@@ -8,14 +8,14 @@ import json
 
 model = RealStatePredictor()
 
-def predict_similars(property_index: int) -> float:
+def predict_similars(property_index: int) -> list[dict]:
     return model.predict_best_similars(property_index)
 
 
 def log_prediction(property_index:int, similar_predictions: list) -> None:
     log(f'{similar_predictions}', [('property_index', str(property_index) )])
  
-def predict(predictionInput: PredictionInput) -> float:
+def predict(predictionInput: PredictionInput) -> list[dict]:
     """
     Given a prediction input, return a prediction of similarity.
 

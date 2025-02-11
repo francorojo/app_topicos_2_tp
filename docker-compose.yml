@@ -36,3 +36,5 @@ services:
             - "5003:8000"
         depends_on:
             - logger
+            - ai-model
+            - users

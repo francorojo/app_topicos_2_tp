@@ -1,5 +1,5 @@
 from app.exception import LoggingError, PredictionError, UsersError
-from app.utils import log
+from app.utils import log, prediction
 from flask import request, jsonify
 from app.__init__ import get_user_type_rate_limit
 from app import app
@@ -16,10 +16,10 @@ def service():
        log('Key user: ' + authorization + " - Invalid or missing JSON data", "ERROR")
        raise ValueError("Invalid or missing JSON data")
    else:
-       real_state_index = data.get('real_state_index')
+       predictionModel = prediction(data.get('real_state_index'))
 
-   log('New request key user: ' + authorization + " - Result: " + real_state_index, "INFO")
-   return jsonify([{"index":real_state_index, "similarity": 1}]), 200
+   log('New request key user: ' + authorization + " - Result: " + predictionModel, "INFO")
+   return jsonify(predictionModel), 200
 
 @app.errorhandler(Exception)
 def handle_error(error):

@@ -34,13 +34,15 @@ def log(message: str, tags: list[tuple[str,str]] = None) -> None:
         raise LoggingError(f"Failed to log: {response.text}")
 
 
-def user_by_api_key(authorization: str) -> None:
+def user_by_api_key(authorization: str) -> dict:
     response = requests.get(f"{BASE_USERS_URL}/users?api_key={authorization}", json={}, timeout=5)
     if(response.status_code!= 200):
         raise UsersError(f"Failed to get users: {response.text}")
+    return response.json()
 
 
-def prediction(real_state_index: int) -> None:
-    response = requests.get(f"{BASE_AI_MODEL_URL}/prediction", json={}, timeout=5)
+def prediction(real_state_index: int) -> list[dict]:
+    response = requests.get(f"{BASE_AI_MODEL_URL}/prediction", json={"real_state_index":real_state_index}, timeout=5)
     if(response.status_code!= 200):
         raise PredictionError(f"Failed to get prediction: {response.text}")
+    return response.json()

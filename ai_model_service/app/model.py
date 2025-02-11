@@ -41,7 +41,7 @@ class RealStatePredictor:
         self.cached_ids = list(set(filtered_rows[:, 0].tolist()))
 
 
-    def predict_best_similars(self, real_state_index: int, n: int = 10):
+    def predict_best_similars(self, real_state_index: int, n: int = 10) -> list[dict]:
         """
         Predict the best n similar real estate properties to the given property.
 

@@ -5,8 +5,8 @@ FROM python:3.8-slim
 WORKDIR /api-flask 
 
 # Copie los archivos y directorios necesarios en el contenedor
-COPY api.py /api-flask/ 
-COPY requirements.txt /api-flask/ 
+COPY /app . 
+COPY requirements.txt . 
 
 # Actualizar pip e instalar las dependencias de Python
 RUN pip3 install --upgrade pip && pip install --no-cache-dir -r requirements.txt 

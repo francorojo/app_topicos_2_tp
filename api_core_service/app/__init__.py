@@ -26,10 +26,10 @@ def get_user_type_rate_limit():
 
    if user_type is None:  # Cache failed and set value
        response = user_by_api_key(authorization)
-       if not response.body:
+       if not response:
            user_type = "NOT_REGISTERED"
        else:
-           user_type = response.body[0]['type']
+           user_type = response[0]['type']
        client.set(authorization, user_type, expire=60)  # 60 seconds
    else:
        user_type = user_type.decode('ASCII')
