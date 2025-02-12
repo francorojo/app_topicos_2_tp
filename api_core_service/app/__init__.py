@@ -21,12 +21,17 @@ client = base.Client(('localhost', 11211))
 def get_user_type_rate_limit():
    # Access headers
    authorization = request.headers.get('Authorization')
+   print("Authorization rate limit= " + authorization, flush=True)
+
    # Try search in cache
    user_type = client.get(authorization)
+   print(user_type, flush=True)
 
    if user_type is None:  # Cache failed and set value
        response = user_by_api_key(authorization)
-       if not response:
+       print("response rate limit= " + str(response), flush=True)
+
+       if response == []:
            user_type = "NOT_REGISTERED"
        else:
            user_type = response[0]['type']
@@ -59,7 +64,7 @@ def handle_ratelimit_exceeded(e):
    else:
        message = "Has superado tu límite de solicitudes por minuto. Considera contratar un plan para mas accesos."
 
-   log('Rate limit error key user: ' + authorization + " - message: " + message, "INFO")
+   log('Rate limit error key user: ' + authorization + " - message: " + message)
    return jsonify({'error': message}), 429
 # END Rate Limit Section
 

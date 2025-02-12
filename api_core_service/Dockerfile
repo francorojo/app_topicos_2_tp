@@ -29,4 +29,4 @@ USER myuser
 
 
 # Start Memcached and define the command to run the Flask application
-CMD ["sh", "-c", "memcached -d && gunicorn -w 4 app:app --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "memcached -d && gunicorn -w 1 app:app --bind 0.0.0.0:8000"]

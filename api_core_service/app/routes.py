@@ -12,14 +12,16 @@ def service():
    authorization = request.headers.get('Authorization')
    data = request.get_json()
 
+   print("Authorization= " + authorization, flush=True)
    if not data:
-       log('Key user: ' + authorization + " - Invalid or missing JSON data", "ERROR")
+       log('Key user: ' + authorization + " - Invalid or missing JSON data")
        raise ValueError("Invalid or missing JSON data")
    else:
+       print("Data= " + str(data.get('real_state_index')), flush=True)
        predictionModel = prediction(data.get('real_state_index'))
 
-   log('New request key user: ' + authorization + " - Result: " + predictionModel, "INFO")
-   return jsonify(predictionModel), 200
+   log('New request key user: ' + authorization + " - Result: " + str(predictionModel))
+   return jsonify({'prediction': str(predictionModel)}), 200
 
 @app.errorhandler(Exception)
 def handle_error(error):
