@@ -1,0 +1,18 @@
+
+
+GET http://localhost:5000/users
+
+###
+
+GET http://localhost:5000/users/05e7233e-eba7-4afe-b7dc-9b2689274493
+
+###
+
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "username": "johndoe",
+    "type": "PREMIUM"
+}
+

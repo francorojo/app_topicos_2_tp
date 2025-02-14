@@ -1,0 +1,14 @@
+
+POST http://localhost:5000/log
+Content-Type: application/json
+
+{
+    "service": "model",
+    "message": "logged",
+    "tag_type": "basic"
+}
+
+###
+
+GET http://localhost:5000/logs
+Content-Type: application/json
